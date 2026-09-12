@@ -1,0 +1,54 @@
+name: Sync templates
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'structure/**'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install rclone
+        run: curl https://rclone.org/install.sh | sudo bash
+
+      - name: Configure rclone for R2
+        run: |
+          mkdir -p ~/.config/rclone
+          cat > ~/.config/rclone/rclone.conf <<EOF
+          [r2]
+          type = s3
+          provider = Cloudflare
+          access_key_id = ${{ secrets.R2_ACCESS_KEY_ID }}
+          secret_access_key = ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          endpoint = ${{ secrets.R2_ENDPOINT }}
+          EOF
+
+      - name: Package each template as tar.gz
+        run: |
+          mkdir -p dist/templates
+          for dir in structure/*/; do
+            name=$(basename "$dir")
+            mkdir -p "dist/templates/${name}"
+            tar czf "dist/templates/${name}/latest.tar.gz" -C "$dir" .
+          done
+
+      - name: Generate manifest.json
+        run: |
+          echo '{"updated_at":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","templates":[' > dist/manifest.json
+          first=true
+          for dir in structure/*/; do
+            name=$(basename "$dir")
+            if [ "$first" = true ]; then first=false; else echo ',' >> dist/manifest.json; fi
+            echo "{\"name\":\"$name\"}" >> dist/manifest.json
+          done
+          echo ']}' >> dist/manifest.json
+
+      - name: Sync dist/ to R2
+        run: rclone sync dist/ r2:scaffolder-dist/ --progress

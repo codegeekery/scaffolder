@@ -1,0 +1,28 @@
+# Binarios compilados
+scaffolder
+scaffolder-*
+*.exe
+dist/
+
+# Go
+*.test
+*.out
+go.work
+go.work.sum
+
+# Proyectos generados de prueba (si testeas el CLI localmente)
+mi-app/
+test-output/
+
+# Variables de entorno / secretos locales
+.env
+.env.local
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+*.swp
