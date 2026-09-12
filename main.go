@@ -13,7 +13,7 @@ import (
 	"path/filepath"
 )
 
-const baseURL = "https://91c1422f150d6f550743dcf76f32b5f2.eu.r2.cloudflarestorage.com"
+var baseURL = "https://scaffolder.codegeekery.com"
 
 type Manifest struct {
 	UpdatedAt string `json:"updated_at"`
