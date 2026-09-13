@@ -51,4 +51,4 @@ jobs:
           echo ']}' >> dist/manifest.json
 
       - name: Sync dist/ to R2
-        run: rclone sync dist/ r2:scaffolder-dist/ --progress
+        run: rclone sync dist/ r2:scaffolder-dist/ --progress --no-check-bucket
