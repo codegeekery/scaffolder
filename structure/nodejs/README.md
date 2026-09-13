@@ -1,27 +1,27 @@
-# Node.js Pro Project
+# Proyecto Node.js Pro
 
-Basic, professional structure using Express.
+Estructura básica y profesional con Express.
 
-## Folders
+## Carpetas
 
 ```
 proyecto-node-pro/
-├── config/         # App configuration (port, etc.)
-├── controllers/    # Business logic separated from routes
-├── middleware/      # Middlewares (logger, error handling)
-├── routes/          # Route definitions
-├── utils/           # Reusable helper functions
+├── config/         # Configuración de la app (puerto, etc.)
+├── controllers/    # Lógica de negocio separada de las rutas
+├── middleware/      # Middlewares (logger, manejo de errores)
+├── routes/          # Definición de rutas
+├── utils/           # Funciones auxiliares reutilizables
 ├── package.json
 └── server.js
 ```
 
-## Usage
+## Uso
 
 ```bash
 npm install
 npm run dev
 ```
 
-`npm run dev` uses Node.js's native `--watch` flag (v18.11+) to automatically restart the server on file changes, without relying on nodemon.
+`npm run dev` usa el flag `--watch` nativo de Node.js (v18.11+) para reiniciar el servidor automáticamente al detectar cambios, sin depender de nodemon.
 
-Then visit `http://localhost:3000/`.
+Luego visita `http://localhost:3000/`.
