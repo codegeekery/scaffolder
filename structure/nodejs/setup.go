@@ -6,10 +6,11 @@ import (
 	"os/exec"
 )
 
+
 func main() {
 	fmt.Println("Setting up project dependencies...")
 
-	cmd := exec.Command("npm", "install", "express", "cors")
+	cmd := exec.Command("npm", "install")
 	cmd.Stdout = nil
 	cmd.Stderr = nil
 
